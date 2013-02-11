@@ -1,0 +1,6 @@
+Commands:
+  expressions:
+    help:
+      '1': '&3/facepalm &b- [Your Name] facepalmed'
+      '2': '&3/facedesk &b- [Your Name] facedesked'
+      '3': '&3/slap <player> [force] &b- slap a player'

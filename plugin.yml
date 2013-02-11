@@ -1,0 +1,19 @@
+name: Expressions
+main: com.stealthyone.expressions.ExpressionsPlugin
+version: 1.0
+website: http://stealthyone.com/
+description: Commands that allow players to express their feelings
+author: Stealth2800
+commands:
+  expressions:
+    description: 'General plugin information'
+    usage: '/expressions'
+  slap:
+    description: 'For a player to slap another player that is misbehaving'
+    usage: '/slap <player> [force]'
+  facepalm:
+    description: 'For a player to express their mild disappointment'
+    usage: '/facepalm'
+  facedesk:
+    description: 'For a player to express their ultimate disappointment'
+    usage: '/facedesk'
