@@ -26,7 +26,7 @@ public class ExpressionsConfig {
 		config = plugin.getConfig();
 		
 		//General Plugin Config
-		config.addDefault("Debug", true);
+		config.addDefault("Debug", false);
 		
 		//Facepalm Messages
 		config.addDefault("Facepalm.Enabled", true);
