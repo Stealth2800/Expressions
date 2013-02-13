@@ -20,12 +20,10 @@ public class CustomJarFileManager {
 	}
 	
 	public final void reloadFile() {
+		/**
+		 * Loads the file and gets config values from it
+		 */
 		plugin.log.debug(customFile + " - reloadFile()");
-		/*if (customFile == null) {
-			plugin.log.debug(customFile + " - customFile == null");
-			customFile = new File(plugin.getDataFolder(), fileName);
-		}
-		customConfig = YamlConfiguration.loadConfiguration(customFile);*/
 		
 		InputStream defStream = plugin.getResource(fileName + ".yml");
 		if (defStream != null) {
@@ -35,6 +33,9 @@ public class CustomJarFileManager {
 	}
 	
 	public final FileConfiguration getConfig() {
+		/**
+		 * Returns the fileConfig for referencing objects in file
+		 */
 		plugin.log.debug(customFile + ".yml - getConfig()");
 		if (customConfig == null) {
 			plugin.log.debug(customFile + ".yml - customConfig == null");
