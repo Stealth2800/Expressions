@@ -86,14 +86,24 @@ public class Slap implements CommandExecutor {
 				
 				plugin.log.debug("Checking for permission: expressions.slap." + power + " for player: " + sender.getName());
 				
-				if (sender.hasPermission("expressions.slap." + power)) {
+				if (plugin.perm.checkPermission(sender, "expressions.slap." + power)) {
 					String slapMessage = plugin.config.getSlapMessage(power);
-					if (slapMessage != null) {
-						plugin.log.debug("Slap message = " + ChatColor.translateAlternateColorCodes('&', plugin.config.getSlapMessage(power).replace("{SENDER}", senderName).replace("{PLAYER}", target.getName())));
-						plugin.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.config.getSlapMessage(power).replace("{SENDER}", senderName).replace("{PLAYER}", target.getName()))); 
-					} else {
-						sender.sendMessage(ChatColor.RED + "Power is too high!");
+					if (slapMessage == null) {
+						sender.sendMessage(ChatColor.RED + "Power too high!");
+						return true;
 					}
+					if (sender instanceof Player) {
+						if (!plugin.perm.checkPermission(sender, "expressions.nocooldown.slap", false)) {
+							plugin.log.debug("Player " + sender.getName() + " doesn't have permission for cooldown bypass!");
+							if (!plugin.cdManager.canSlap(sender)) {
+								sender.sendMessage(ChatColor.RED + "You cannot slap for another " + (plugin.getConfig().getInt("Slap.Cooldown") - plugin.cdManager.getCooldownSeconds(sender)) + " second(s)!");
+								return true;
+							}
+						} else {
+							plugin.log.debug("Player " + senderName + " can bypass cooldown!");
+						}
+					}
+						plugin.methods.slapPlayer(senderName, target, power);
 					return true;
 				} else {
 					sender.sendMessage(ChatColor.RED + "You don't have permission to slap with a power of " + ChatColor.DARK_RED + power);
