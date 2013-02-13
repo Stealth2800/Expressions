@@ -16,30 +16,21 @@ public class Expressions implements CommandExecutor {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		String cmdArg;
-		if (args.length == 1) {
-			cmdArg = args[0];
-		} else if (args.length > 1) {
-			sender.sendMessage(ChatColor.RED + "Too many arguments!");
+		if (args.length == 0) {
+			plugin.methods.showUsage(sender, "expressions.self");
 			return true;
-		} else {
-			cmdArg = null;
-		}
-		
-		plugin.log.debug("Expressions cmdArg = " + cmdArg);
-		
-		if (cmdArg == null || cmdArg.equalsIgnoreCase("version")) {
+		} else if (args[0].equalsIgnoreCase("version")) {
 			/**
 			 * Plugin version command
 			 */
 			if (!plugin.perm.checkPermission(sender, "expressions.version")) {
 				return true;
 			}
-			sender.sendMessage(ChatColor.DARK_AQUA + plugin.getPlName() + ChatColor.AQUA + " version " + ChatColor.DARK_AQUA + plugin.getPlVersion() + ChatColor.AQUA + " by Stealth2800");
+			sender.sendMessage(ChatColor.DARK_AQUA + plugin.getPlName() + ChatColor.DARK_AQUA + " v" + plugin.getPlVersion() + ChatColor.AQUA + " by Stealth2800");
 			sender.sendMessage(ChatColor.AQUA + "BukkitDev: " + ChatColor.DARK_AQUA + "http://google.com/");
 			sender.sendMessage(ChatColor.AQUA + "For help, type " + ChatColor.DARK_AQUA + "/expressions help");
 			return true;
-		} else if (cmdArg.equalsIgnoreCase("reload")) {
+		} else if (args[0].equalsIgnoreCase("reload")) {
 			/**
 			 * Reload config command
 			 */
@@ -49,16 +40,47 @@ public class Expressions implements CommandExecutor {
 			plugin.reloadConfig();
 			sender.sendMessage(ChatColor.RED + plugin.getPlName() + " reloaded.");
 			return true;
-		} else if (cmdArg.equalsIgnoreCase("help")) {
+		} else if (args[0].equalsIgnoreCase("help")) {
 			/**
 			 * Help command
 			 */
-			plugin.cmdHelp.getConfig();
-			plugin.log.debug("Just getConfig()");
-			plugin.cmdHelp.getConfig().getConfigurationSection("Commands").getValues(false).size();
-			plugin.log.debug("getConfigurationSection 'Commands' size");
-			//sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.cmdHelp.getConfig().getString("Commands.expressions.help.1")));
-			plugin.methods.showHelp(sender.getName(), "expressions.help");
+			//Permission check
+			if (!plugin.perm.checkPermission(sender, "expressions.help")) {
+				//No permission
+				return true;
+			}
+			
+			//Checks to see if there are too many arguments
+			if (args.length > 2) {
+				//Too many arguments, shows usage
+				plugin.methods.showUsage(sender, "expressions.help");
+				return true;
+			} else if (args.length == 2) {
+				//If page number in arguments, check if it's an integer
+				int pageNum;
+				try {
+					pageNum = Integer.valueOf(args[1]);
+					if (pageNum <= 0) {
+						sender.sendMessage(ChatColor.RED + "Page number must be greater than 0!");
+						return true;
+					}
+				} catch (NumberFormatException e) {
+					//pageNum not an integer
+					sender.sendMessage(ChatColor.RED + "Page number must be an integer!");
+					return true;
+				}
+			}
+			
+			plugin.methods.showHelp(sender, "expressions.help");
+			return true;
+		} else if (args[0].equalsIgnoreCase("commands")) {
+			/**
+			 * Shows available commands in the plugin
+			 */
+			if (!plugin.perm.checkPermission(sender, "expressions.commands")) {
+				return true;
+			}
+			plugin.methods.showHelp(sender, "expressions.commands");
 			return true;
 		} else {
 			return false;
