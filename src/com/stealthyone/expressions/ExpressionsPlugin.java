@@ -1,9 +1,21 @@
 package com.stealthyone.expressions;
 
+import java.text.SimpleDateFormat;
+
 import com.stealthyone.expressions.commands.*;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * 
+ * Expressions
+ * ExpressionsPlugin.java
+ *
+ * Main class + logic of the plugin
+ *
+ * @author Austin T./Stealth2800
+ * @website http://stealthyone.com/
+ */
 public class ExpressionsPlugin extends JavaPlugin {
 	
 	public ExpressionsLogger log;
@@ -13,6 +25,9 @@ public class ExpressionsPlugin extends JavaPlugin {
 	public PermissionHandler perm;
 	
 	public CustomJarFileManager cmdHelp;
+	public CooldownManager cdManager;
+	
+	public SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	
 	@Override
 	public void onEnable() {
@@ -32,6 +47,8 @@ public class ExpressionsPlugin extends JavaPlugin {
 		//Setup custom files
 		cmdHelp = new CustomJarFileManager(this, "cmdHelp");
 		cmdHelp.reloadFile();
+		cdManager = new CooldownManager(this, "cooldowns.yml");
+		cdManager.reloadFile();
 		
 		//Register Commands
 		getCommand("expressions").setExecutor(new Expressions(this));
