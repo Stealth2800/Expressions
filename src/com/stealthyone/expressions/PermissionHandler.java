@@ -24,10 +24,10 @@ public class PermissionHandler {
 		this.plugin = plugin;
 	}
 	
-	/**
-	 * Returns if a player has permission for a specified command
-	 */
 	public boolean checkPermission(CommandSender sender, String permission) {
+		/**
+		 * Returns if a player has permission for a specified command
+		 */
 		return checkPermission(sender, permission, true);
 	}
 	

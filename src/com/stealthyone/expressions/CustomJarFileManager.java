@@ -6,6 +6,16 @@ import java.io.InputStream;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+/**
+ * 
+ * Expressions
+ * CustomJarFileManager.java
+ *
+ * Manager for files inside of the jar
+ *
+ * @author Austin T./Stealth2800
+ * @website http://stealthyone.com/
+ */
 public class CustomJarFileManager {
 
 	private ExpressionsPlugin plugin;

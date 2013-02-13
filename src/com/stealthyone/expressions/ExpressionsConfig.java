@@ -2,6 +2,16 @@ package com.stealthyone.expressions;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
+/**
+ * 
+ * Expressions
+ * ExpressionsConfig.java
+ *
+ * Manages the main configuration of the file
+ *
+ * @author Austin T./Stealth2800
+ * @website http://stealthyone.com/
+ */
 public class ExpressionsConfig {
 
 	private ExpressionsPlugin plugin;
@@ -27,6 +37,7 @@ public class ExpressionsConfig {
 		//Slap Messages
 		config.addDefault("Slap.Enabled", true);
 		config.addDefault("Slap.Default_Power", 2);
+		config.addDefault("Slap.Cooldown", 30);
 		config.addDefault("Slap.Messages.1", "&3**&b{SENDER} &3poked &b{PLAYER}&3!**");
 		config.addDefault("Slap.Messages.2", "&3**&b{SENDER} &3slapped &b{PLAYER}&3!**");
 		config.addDefault("Slap.Messages.3", "&3**&b{SENDER} &3slapped &b{PLAYER} &3hard!**");
@@ -53,7 +64,6 @@ public class ExpressionsConfig {
 	public String getSlapMessage(int power) {
 		plugin.log.debug("Slap message = " + plugin.getConfig().get("Slap.Messages." + Integer.toString(power)));
 		try {
-			//return config.get("Slap.Messages." + Integer.toString(power)).toString();
 			return plugin.getConfig().get("Slap.Messages." + Integer.toString(power)).toString();
 		} catch (NullPointerException e) {
 			return null;
